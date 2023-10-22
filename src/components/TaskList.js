@@ -2,12 +2,11 @@ import React from "react";
 
 import Col from "react-bootstrap/Col";
 
-function TaskList({ taskLists, selectedTask,handleSelectTask }) {
+function TaskList({ taskList, selectedTask, handleSelectTask }) {
   return (
     <Col className="d-flex justify-content-center align-items-center ">
-    
       <ul className="tasklist text-white mt-2 ms-4  ">
-        {taskLists.map((currentTask, index) => (
+        {taskList.map((currentTask, index) => (
           <li
             className="mt-1 d-flex "
             key={index}

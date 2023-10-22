@@ -13,7 +13,7 @@ import TaskList from "../components/TaskList";
 
 function TasksPage() {
   const [currentTask, setCurrentTask] = useState("");
-  const [taskLists, setTaskList] = useState([]);
+  const [taskList, setTaskList] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
 
   const navigate = useNavigate();
@@ -34,10 +34,10 @@ function TasksPage() {
   }, []);
 
   useEffect(() => {
-    if (taskLists.length) {
-      localStorage.setItem("tasks", JSON.stringify(taskLists));
+    if (taskList.length) {
+      localStorage.setItem("tasks", JSON.stringify(taskList));
     }
-  }, [taskLists]);
+  }, [taskList]);
 
   const handleChange = (e) => {
     setCurrentTask(e.target.value);
@@ -46,7 +46,7 @@ function TasksPage() {
   const handleAdd = (event) => {
     event.preventDefault();
     if (currentTask) {
-      setTaskList([...taskLists, currentTask]);
+      setTaskList([...taskList, currentTask]);
       setCurrentTask("");
     } else {
       alert("Please enter a To Do...");
@@ -56,11 +56,11 @@ function TasksPage() {
   const handleDelete = (event) => {
     event.preventDefault();
     if (selectedTask !== null) {
-      const updatedTask = [...taskLists];
+      const updatedTask = [...taskList];
       updatedTask.splice(selectedTask, 1);
       setTaskList(updatedTask);
       setSelectedTask(null);
-      if (taskLists.length === 1) {
+      if (taskList.length === 1) {
         localStorage.setItem("tasks", JSON.stringify(updatedTask));
       }
     }
@@ -119,7 +119,7 @@ function TasksPage() {
         </Row>
         <Row>
           <TaskList
-            taskLists={taskLists}
+            taskList={taskList}
             selectedTask={selectedTask}
             handleSelectTask={handleSelectTask}
           />
