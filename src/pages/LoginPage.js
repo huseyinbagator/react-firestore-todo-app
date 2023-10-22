@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
 
 import image from "../images/image-1.png";
 
 function Login() {
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -21,6 +23,7 @@ function Login() {
   const handleLogin = (event) => {
     if (Username === "admin" && Password === "admin") {
       localStorage.setItem("username", "admin");
+      navigate("/tasks");
     } else {
       alert("Username or password is wrong");
     }
@@ -30,8 +33,9 @@ function Login() {
   useEffect(() => {
     const loginValidation = localStorage.getItem("username");
     if (loginValidation) {
+      navigate("/tasks");
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="login-page-main d-flex  justify-content-center align-items-center">
