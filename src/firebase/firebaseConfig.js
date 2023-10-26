@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "APİ_KEY",
-  authDomain: "AUTH_DOMEİN",
-  databaseURL: "DATA_BASE_URL",
+  apiKey: "API_KEY",
+  authDomain: "AUTH_DOMAIN",
+  databaseURL: "DATABASE_URL",
   projectId: "PROJECT_ID",
   storageBucket: "STORAGE_BUCKET",
-  messagingSenderId: "MESSAGİNG_SENDER_ID",
+  messagingSenderId: "MESSAGING_SENDER_ID",
   appId: "APP_ID",
 };
 
