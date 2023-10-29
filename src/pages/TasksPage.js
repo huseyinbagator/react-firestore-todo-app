@@ -2,6 +2,7 @@ import React from "react";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
+import { collection, getDocs } from "firebase/firestore";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
@@ -9,6 +10,7 @@ import Row from "react-bootstrap/Row";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+import db from "../firebase/firebaseConfig";
 import TaskList from "../components/TaskList";
 
 function TasksPage() {
@@ -27,10 +29,23 @@ function TasksPage() {
   }, [navigate]);
 
   useEffect(() => {
-    const storedData = localStorage.getItem("tasks");
-    if (storedData && storedData !== "undefined") {
-      setTaskList(JSON.parse(storedData));
-    }
+    const fetchDataFromFirestore = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "tasks"));
+        const taskDataList = [];
+        querySnapshot.forEach((doc) => {
+          const id = doc.id;
+          const data = doc.data();
+          const task = { id: id, ...data };
+          taskDataList.push(task);
+          setTaskList([...taskDataList]);
+        });
+      } catch (error) {
+        console.error("Firestore error:", error);
+      }
+    };
+
+    fetchDataFromFirestore();
   }, []);
 
   useEffect(() => {
@@ -73,9 +88,11 @@ function TasksPage() {
       setSelectedTask(index);
     }
   };
+
   const handleExit = () => {
     localStorage.removeItem("username");
   };
+
   return (
     <div className="App">
       <Container className="tasks-page d-flex justify-content-center flex-column">
