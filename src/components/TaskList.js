@@ -8,19 +8,19 @@ function TaskList({ taskList, selectedTask, handleSelectTask }) {
     <Col className="d-flex justify-content-center align-items-center ">
       <ul className="tasklist text-white mt-2 ms-4  ">
         {taskList &&
-          taskList.map((currentTask, index) => (
+          taskList.map((element) => (
             <li
               className="mt-1 d-flex "
-              key={index}
-              onClick={() => handleSelectTask(index)}
+              key={element.id}
+              onClick={() => handleSelectTask(element.id)}
             >
               {" "}
               <span
                 className={`round rounded-circle me-3 bg-secondary ${
-                  selectedTask === index ? "bg-success" : ""
+                  selectedTask === element.id ? "bg-success" : ""
                 }`}
               ></span>
-              {currentTask.task}
+              {element.task}
             </li>
           ))}
       </ul>
