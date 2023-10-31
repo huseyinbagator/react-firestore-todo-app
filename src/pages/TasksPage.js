@@ -1,6 +1,6 @@
 import React from "react";
 
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -58,14 +58,17 @@ function TasksPage() {
     setCurrentTask(e.target.value);
   };
 
-  const handleAdd = (event) => {
+  const handleAdd = async (event) => {
     event.preventDefault();
     if (currentTask) {
-      setTaskList([...taskList, currentTask]);
-      setCurrentTask("");
-    } else {
-      alert("Please enter a To Do...");
+      const docRef = await addDoc(collection(db, "tasks"), {
+        task: currentTask,
+      });
     }
+
+    setCurrentTask("");
+    const newTask = { task: currentTask };
+    setTaskList([...taskList, newTask]);
   };
 
   const handleDelete = (event) => {
