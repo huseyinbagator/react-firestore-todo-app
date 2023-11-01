@@ -60,15 +60,19 @@ function TasksPage() {
 
   const handleAdd = async (event) => {
     event.preventDefault();
+    const username = localStorage.getItem("username");
     if (currentTask) {
       const docRef = await addDoc(collection(db, "tasks"), {
+        user: username,
         task: currentTask,
       });
-    }
 
-    setCurrentTask("");
-    const newTask = { task: currentTask };
-    setTaskList([...taskList, newTask]);
+      setCurrentTask("");
+      const newTask = { id: docRef.id, task: currentTask };
+      setTaskList([...taskList, newTask]);
+    } else {
+      alert("Please enter a To Do...");
+    }
   };
 
   const handleDelete = (event) => {
