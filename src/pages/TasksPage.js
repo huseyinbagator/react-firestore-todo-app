@@ -88,11 +88,11 @@ function TasksPage() {
     }
   };
 
-  const handleSelectTask = (index) => {
-    if (selectedTask === index) {
+  const handleSelectTask = (taskId) => {
+    if (selectedTask === taskId) {
       setSelectedTask(null);
     } else {
-      setSelectedTask(index);
+      setSelectedTask(taskId);
     }
   };
 
