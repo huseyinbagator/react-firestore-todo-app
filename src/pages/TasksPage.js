@@ -1,6 +1,11 @@
 import React from "react";
-
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -75,15 +80,17 @@ function TasksPage() {
     }
   };
 
-  const handleDelete = (event) => {
+  const handleDelete = async (event) => {
     event.preventDefault();
-    if (selectedTask !== null) {
-      const updatedTask = [...taskList];
-      updatedTask.splice(selectedTask, 1);
-      setTaskList(updatedTask);
-      setSelectedTask(null);
-      if (taskList.length === 1) {
-        localStorage.setItem("tasks", JSON.stringify(updatedTask));
+    if (selectedTask) {
+      try {
+        await deleteDoc(doc(db, "tasks", selectedTask));
+        setTaskList((newTaskList) =>
+          newTaskList.filter((task) => task.id !== selectedTask)
+        );
+        setSelectedTask(null);
+      } catch (error) {
+        console.log("Firestore error", error);
       }
     }
   };
