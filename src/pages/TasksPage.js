@@ -53,12 +53,6 @@ function TasksPage() {
     fetchDataFromFirestore();
   }, []);
 
-  useEffect(() => {
-    if (taskList.length) {
-      localStorage.setItem("tasks", JSON.stringify(taskList));
-    }
-  }, [taskList]);
-
   const handleChange = (e) => {
     setCurrentTask(e.target.value);
   };
